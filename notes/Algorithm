@@ -1,0 +1,11 @@
+
+The problem statement, can be thought of as a special case of 
+OS process scheduling.
+
+The restaurant can be thought of as the processor.
+Tables sizes as resource capability.
+Eating time as the burst time.
+And customers as jobs with various resource requirements and burst times.
+
+This can be solved in a hybrid shortest job first algorithm, which also
+checks for the resources, and time is a random parameter.
