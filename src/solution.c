@@ -40,7 +40,6 @@ int main()
 
         free(g);
     }
-PRINT("%s:%d", __FUNCTION__, __LINE__);
 
     return 0;
 }
