@@ -79,7 +79,7 @@ int main()
         Table* t = get_most_optimum_table(&s, g->count_members);
         if(t)
         {
-            PRINT("Got table %d", t->t_no);
+            PRINT("\n\n\nGot table %d", t->t_no);
             go_eat_customer(g, t);
         }
         else
