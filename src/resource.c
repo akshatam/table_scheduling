@@ -18,10 +18,12 @@ void initialize_seating_manager(SeatingManager** s, int n)
 
         int *k = malloc(sizeof(int));
         *k = t[i]->capacity;
+
+        GSList* l;
         if(g_hash_table_lookup((*s)->map_capacity_tables, k))
         {
-            GSList* l = 
-                (GSList*)g_hash_table_lookup((*s)->map_capacity_tables, k);
+            l = 
+              (GSList*)g_hash_table_lookup((*s)->map_capacity_tables, k);
             l = g_slist_append(l, t[i]);
             PRINT("Cap: %d tables: %d", t[i]->capacity, g_slist_length(l));
 
@@ -34,6 +36,7 @@ void initialize_seating_manager(SeatingManager** s, int n)
             *tmp_k = *k;
 
             g_hash_table_insert((*s)->map_capacity_tables, tmp_k, l);
+            PRINT("Inserting 1st element of %d cap", t[i]->capacity);
         }
 
         free(k);
