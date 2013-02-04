@@ -9,3 +9,71 @@ And customers as jobs with various resource requirements and burst times.
 
 This can be solved in a hybrid shortest job first algorithm, which also
 checks for the resources, and time is a random parameter.
+
+
+Data Structures used
+
+Table
+        -Table no
+        -Capacity
+        -is_occupied
+
+CustomerGroup
+        -count of members
+        -eat time
+        -wait time (Stub)
+
+
+########### Managers #################
+
+SeatingManager
+        -- array of tables
+        -- map of capacity_no => {list of tables}
+
+HungryCustomerEating
+        -- customer group
+        -- Table at which they are eating
+
+#####################################
+
+
+Producer Thread: Produces Customers and puts the into a queue.
+
+Consumer Thread: 
+        -- pops from waiting queue (preference)
+            curr_cust = NULL
+            cust_waiting = pop(wait_queue)
+            if cust_waiting exist
+                curr_cust = cust_waiting
+            else (no cust in wait queue)
+                curr_cust = pop_master_queue
+
+            t = table_for_cust(curr_cust)
+            if (t == TRUE)
+                EAT_CUSTOMER
+            else
+                push(cust --> wait_queue)
+
+EAT THREAD:
+    Responsible for feeding Hungry Customers.
+
+
+
+
+#########################################
+Complexity:
+    Worst case to find a table,
+        6 * n (where n = tables)
+        Hence O(n)
+    Space
+        List = n
+        Hash = 6
+        Worst Case Waiting queue = R(x)
+        Worst Case Master queue  = R(y)
+
+        Where R() is a function at which customers come into the hotel.
+
+        Space complexity id dependent upon R().
+
+
+
