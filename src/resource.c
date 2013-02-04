@@ -5,7 +5,7 @@ void initialize_seating_manager(SeatingManager** s, int n)
     *s = malloc(sizeof(SeatingManager*));
     (*s)->tables = NULL;
     (*s)->map_capacity_tables = g_hash_table_new_full(g_int_hash, g_int_equal,
-                                                NULL, free_table_collection);
+                                                NULL, NULL);
     Table** t = NULL;
     t = malloc(sizeof(Table*) * n);
 
@@ -25,7 +25,7 @@ void initialize_seating_manager(SeatingManager** s, int n)
             l = 
               (GSList*)g_hash_table_lookup((*s)->map_capacity_tables, k);
             l = g_slist_append(l, t[i]);
-            PRINT("Cap: %d tables: %d", t[i]->capacity, g_slist_length(l));
+            PRINT("Cap: %d tables: %d", t[i]->capacity, g_slist_length(l)-1);
 
         }
         else
@@ -66,7 +66,7 @@ void free_table_collection(void* ptr)
     }
 }
 
-Table* get_most_optimum_table(SeatingManager* s, int capacity)
+Table* get_most_optimum_table(SeatingManager** s, int capacity)
 {
     int flag = 0;
     Table* t = NULL;
@@ -76,9 +76,9 @@ Table* get_most_optimum_table(SeatingManager* s, int capacity)
         int* k = malloc(sizeof(int));
         *k = i;
 
-        if(g_hash_table_lookup(s->map_capacity_tables, k))
+        if(g_hash_table_lookup((*s)->map_capacity_tables, k))
         {
-            GSList* sl = g_hash_table_lookup(s->map_capacity_tables, k);
+            GSList* sl = g_hash_table_lookup((*s)->map_capacity_tables, k);
             int list_len = g_slist_length(sl);
             for(int j = 0; j < list_len; j++)
             {
