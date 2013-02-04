@@ -1,0 +1,6 @@
+#!/bin/bash
+
+mkdir -p ./release/bin/
+rm src/*.o
+make --dir src/
+echo "Binaries into $(pwd)/release/bin/"
