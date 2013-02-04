@@ -16,13 +16,13 @@ void initialize_seating_manager(SeatingManager** s, int n)
         t[i]->capacity = 1 + rand()%6;
         t[i]->is_occupied = 0;
 
-        g_debug("Initialized table #%d, with capacity: %d",
+        PRINT("Initialized table #%d, with capacity: %d",
                     t[i]->t_no, t[i]->capacity);
     }
     if(t)
     {
         (*s)->tables = t;
-        g_debug("Initialized %d tables", n);
+        PRINT("Initialized %d tables", n);
     }
 } 
 
