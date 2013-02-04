@@ -65,3 +65,33 @@ void free_table_collection(void* ptr)
         t = NULL;
     }
 }
+
+Table* get_most_optimum_table(SeatingManager* s, int capacity)
+{
+    int flag = 0;
+    Table* t = NULL;
+    for(int i = capacity; i <= 6; i++)
+    {
+        if(t) break;
+        int* k = malloc(sizeof(int));
+        *k = i;
+
+        if(g_hash_table_lookup(s->map_capacity_tables, k))
+        {
+            GSList* sl = g_hash_table_lookup(s->map_capacity_tables, k);
+            int list_len = g_slist_length(sl);
+            for(int j = 0; j < list_len; j++)
+            {
+                Table* m_table = g_slist_nth_data(sl, j);
+                if(m_table->is_occupied == 0)
+                {
+                    t = m_table;
+                    break;
+                }
+            }
+        }
+
+        free(k);
+    }
+    return t;
+}

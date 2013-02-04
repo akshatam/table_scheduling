@@ -44,5 +44,6 @@ typedef struct
 } SeatingManager;
 void free_table_collection(void* ptr);
 void initialize_seating_manager(SeatingManager** s, int n);
+Table* get_most_optimum_table(SeatingManager* s, int capacity);
 
 #endif
