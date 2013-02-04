@@ -5,7 +5,7 @@ void initialize_seating_manager(SeatingManager** s, int n)
     *s = malloc(sizeof(SeatingManager*));
     (*s)->tables = NULL;
     (*s)->map_capacity_tables = g_hash_table_new_full(g_int_hash, g_int_equal,
-                                                NULL, NULL);
+                                                NULL, free_table_collection);
     Table** t = NULL;
     t = malloc(sizeof(Table*) * n);
 
@@ -54,16 +54,13 @@ void initialize_seating_manager(SeatingManager** s, int n)
 
 void free_table_collection(void* ptr)
 {
-    TableCollection* t = (TableCollection*)ptr;
-    if(t)
+    GSList* sl = (GSList*)ptr;
+    int list_len = g_slist_length(sl);
+    for(int j = 0; j < list_len; j++)
     {
-        for(int i = 0; i < t->index; i++)
-        {    
-            free(t->tables[i]);
-            t->tables[i] = NULL;
-        }
-        free(t);
-        t = NULL;
+        Table* m_table = g_slist_nth_data(sl, j);
+        sl = g_slist_remove(sl, m_table);
+        free(m_table);
     }
 }
 
