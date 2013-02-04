@@ -16,6 +16,28 @@ void initialize_seating_manager(SeatingManager** s, int n)
         t[i]->capacity = 1 + rand()%6;
         t[i]->is_occupied = 0;
 
+        int *k = malloc(sizeof(int));
+        *k = t[i]->capacity;
+        if(g_hash_table_lookup((*s)->map_capacity_tables, k))
+        {
+            GSList* l = 
+                (GSList*)g_hash_table_lookup((*s)->map_capacity_tables, k);
+            l = g_slist_append(l, t[i]);
+            PRINT("Cap: %d tables: %d", t[i]->capacity, g_slist_length(l));
+
+        }
+        else
+        {
+            GSList* l = g_slist_alloc();
+            l = g_slist_append(l, t[i]);
+            int* tmp_k = malloc(sizeof(int));
+            *tmp_k = *k;
+
+            g_hash_table_insert((*s)->map_capacity_tables, tmp_k, l);
+        }
+
+        free(k);
+
         PRINT("Initialized table #%d, with capacity: %d",
                     t[i]->t_no, t[i]->capacity);
     }
